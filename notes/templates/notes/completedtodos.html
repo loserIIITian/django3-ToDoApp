@@ -1,0 +1,103 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'notes/custom.css' %}">
+
+
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap" rel="stylesheet">
+
+
+  <link rel="icon" type="image/png" href="{% static 'notes/Logo.png' %}">
+
+  <title>Schedule.It </title>
+</head>
+
+<body>
+
+  <nav id="topNav" class="navbar navbar-expand-md navbar-light " style="background-color: #e3f2fd;">
+
+      <div class="container">
+
+         <img src="{% static 'notes/Logo.png' %}" width="40" height="40" class="d-inline-block align-top">
+         <a class="navbar-brand" href="#">Your Private Productivity Space</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">Schedule.It</span>
+
+      </button>
+       <div class="collapse navbar-collapse" id="navbarNav">
+    {% if user.is_authenticated %}
+        <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item {{ current }}">
+                    <a class="nav-link" style="background-color:hsl(60, 100%, 90%);" href="{% url 'currenttodos' %}">Home</a>
+                </li>
+                <li class="nav-item {{ completed }}">
+                    <a class="nav-link" style="background-color: hsl(160, 100%, 75%);" href="{% url 'completedtodos' %}">Completed</a>
+                </li>
+                <li class="nav-item {{ create }}">
+                    <a class="nav-link" style="background-color:hsl(300, 65%, 81%);" href="{% url 'createtodo' %}">Create</a>
+                </li>
+
+        </ul>
+    {% endif %}
+    <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">Logout</a>
+                    <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
+                        {% csrf_token %}
+                        <button id="signOutBtn"  type="submit">Logout</button>
+                    </form>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" style="background-color:hsl(302, 100%, 89%);" href="{% url 'signupuser' %}">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="background-color:hsl(302, 100%, 94%);"  href="{% url 'loginuser' %}">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    </div>
+  </nav>
+  {% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+
+            <h1 class ="alert" style="background-color:hsl(0, 0%, 92%);">Completed Tasks</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+            <div class="list-group">
+                {% for todo in todos %}
+                    <a href="{% url 'viewtodo' todo.id %}" class="list-group-item list-group-item-action{% if todo.important %} list-group-item-danger{% endif %}"><b>{{ todo.title }}</b> - Completed {{ todo.datecompleted|date:'M j Y H:i' }} by {{todo.user.username}}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+ <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<hr><div class="text-center">
+  <footer>
+        <p> Copyright &copy; 2021| loserIIITian and friends </p>
+        </footer>
+  </div>
+</body>
+
+</html>

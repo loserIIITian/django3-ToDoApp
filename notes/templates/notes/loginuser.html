@@ -1,0 +1,109 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'notes/custom.css' %}">
+
+
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap" rel="stylesheet">
+
+
+  <link rel="icon" type="image/png" href="{% static 'notes/Logo.png' %}">
+
+  <title>Schedule.It  </title>
+</head>
+
+<body>
+
+  <nav id="topNav" class="navbar navbar-expand-md navbar-light " style="background-color: #e3f2fd;">
+
+      <div class="container">
+
+         <img src="{% static 'notes/Logo.png' %}" width="40" height="40" class="d-inline-block align-top">
+         <a class="navbar-brand" href="#">Your Private Productivity Space</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">Schedule.It</span>
+
+      </button>
+      <div class="collapse navbar-collapse text-center" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+            <li>
+            <a role="button" href="{% url 'logoutuser' %}" class="btn btn-outline-dark">Log Out</a>
+          </li>
+            {% else %}
+             <li>
+            <a role="button" href="{% url 'signupuser' %}" class="btn btn-outline-dark">Sign Up</a>
+          </li>
+            {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    {% block content %}
+      <br>
+
+
+<div class="container text-center">
+ <h2 class ="alert" style="background-color:hsl(6, 45%, 92%);">Life is busy. But let's not make it unorganized </h2>
+    <div class = "container" style="background-color:hsl(120, 100%, 97%);">
+    <h4 class ="alert" style="background-color:hsl(120, 100%, 97%);">Let your productivity soar like an Eagle's flight!</h4>
+    <div class="row justify-content-center my-2">
+  <div class="col-2">
+    <img src="{% static 'notes/Logo.png' %}" class="img-fluid">
+  </div>
+</div><br>
+        <h4 >Just do it! But first, Schedule.It</h4></div>
+
+    <div class = "container" style="background-color:hsl(300, 100%, 95%);" ><br>
+        <h5> To continue, Please Log-in</h5><br>
+    <form method ="POST">
+    {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                     </div>
+            {% endif %}
+
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit"class="btn btn-info">Log In</button> <br><br>
+</form></div>
+
+   <hr>
+    <div class="text-center">
+                Don't have an account? <a href="{% url 'signupuser' %}">Sign Up Now</a>
+            </div>
+
+
+    </div>
+
+    </div>
+
+      {% endblock %}
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<hr><div class="text-center">
+  <footer>
+        <p> Copyright &copy; 2021| loserIIITian and friends </p>
+        </footer>
+  </div>
+</body>
+
+</html>
+
